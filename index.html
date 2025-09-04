@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Jannu 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      overflow-x: hidden;
+      text-align: center;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      margin-top: 20px;
+      animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff6b81, 0 0 20px #ff6b81; }
+      to   { text-shadow: 0 0 20px #ff4757, 0 0 30px #ff4757; }
+    }
+
+    /* Photo Frame */
+    #photo-frame {
+      margin: 20px auto;
+      width: 270px;
+      height: 330px;
+      border: 8px solid #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 20px #ff6b81, 0 0 40px #ff4757;
+      animation: frameGlow 2s infinite alternate;
+    }
+    @keyframes frameGlow {
+      from { box-shadow: 0 0 15px #ff6b81, 0 0 30px #ff6b81; }
+      to   { box-shadow: 0 0 25px #ff4757, 0 0 50px #ff4757; }
+    }
+    #photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #countdown { font-size: 1.5em; margin: 20px; font-weight: bold; }
+
+    #note {
+      margin: 20px auto;
+      max-width: 600px;
+      font-size: 1.2em;
+      text-align: left;
+      border-left: 4px solid #ff6b81;
+      padding-left: 15px;
+      min-height: 100px;
+      white-space: pre-line;
+    }
+
+    .closing {
+      margin: 40px auto;
+      max-width: 700px;
+      font-size: 1.3em;
+      font-family: 'Cursive', sans-serif;
+      color: #222;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    .closing span {
+      color: #ff4757;
+      font-size: 1.5em;
+    }
+
+    /* Buttons */
+    .buttons {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap; /* ✅ mobile pe neeche aa jaayenge */
+      gap: 15px;
+    }
+    .surprise-btn, .next-btn {
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: white;
+      font-weight: bold;
+      flex: 1 1 auto;  /* ✅ responsive */
+      max-width: 200px;
+    }
+    .surprise-btn { background: #ff6b81; }
+    .surprise-btn:hover { background: #ff4757; transform: scale(1.1); }
+    .next-btn {
+      background: linear-gradient(45deg, #fbc531, #00a8ff);
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .next-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+
+    /* Floating Balloons & Hearts */
+    .balloon, .heart {
+      position: absolute;
+      bottom: -150px;
+      animation: floatUp 8s infinite ease-in;
+    }
+    .balloon {
+      width: 40px; height: 60px;
+      background: pink;
+      border-radius: 50%;
+    }
+    .heart {
+      width: 30px; height: 30px;
+      background: red;
+      transform: rotate(45deg);
+    }
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 30px; height: 30px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before { top: -15px; left: 0; }
+    .heart::after { left: -15px; top: 0; }
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    /* Surprise Popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .popup-content {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    /* Slideshow Image */
+    #slideshow {
+      max-width: 90vw;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 15px;
+      border: 6px solid #fff;  /* ✅ border add */
+      box-shadow: 0 0 20px #ff6b81, 0 0 40px #ff4757; /* ✅ glowing effect */
+      animation: zoomEffect 12s infinite alternate ease-in-out;
+    }
+    @keyframes zoomEffect {
+      from { transform: scale(1); }
+      to   { transform: scale(1.1); }
+    }
+
+    .caption {
+      margin-top: 10px;
+      color: #fff;
+      font-size: 1.2em;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px; right: 30px;
+      font-size: 2.5em; 
+      cursor: pointer; 
+      color: #62f3c7;
+      z-index: 2100;
+    }
+
+    /* Prev/Next buttons */
+    .nav-controls {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      gap: 5px;
+      margin-top: 10px;
+      flex-wrap: wrap; /* ✅ responsive */
+    }
+    .nav-btn {
+      background: #ff6b81;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .nav-btn:hover { background: #ff4757; transform: scale(1.1); }
+
+    /* Heart-shaped dots */
+    .dots {
+      text-align: center;
+      margin: 10px 0 20px;
+    }
+    .dot {
+      display: inline-block;
+      width: 15px; height: 15px;
+      background-color: #bbb;
+      transform: rotate(45deg);
+      margin: 0 5px;
+      position: relative;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .dot::before, .dot::after {
+      content: "";
+      position: absolute;
+      width: 15px; height: 15px;
+      background-color: inherit;
+      border-radius: 50%;
+    }
+    .dot::before { top: -7px; left: 0; }
+    .dot::after { left: -7px; top: 0; }
+    .dot.active {
+      background-color: red;
+      box-shadow: 0 0 8px red;
+    }
+    .dot.active::before, .dot.active::after {
+      background-color: red;
+    }
+
+    /* ✅ Responsive tweaks */
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      #note { font-size: 1em; }
+      .closing { font-size: 1.1em; padding: 15px; }
+      .caption { font-size: 1em; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.5rem; }
+      #photo-frame {
+        width: 200px;
+        height: 250px;
+      }
+      .surprise-btn, .next-btn {
+        max-width: 100%;
+        font-size: 0.9em;
+      }
+      #slideshow {
+        max-width: 95vw;
+        max-height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Happy Birthday Jannu ❤️ 🎉</h1>
+
+  <div id="photo-frame">
+    <img src="img13.jpg" alt="Bestfriend Pic">
+  </div>
+
+  <div id="countdown"></div>
+  <div id="note"></div>
+
+  <!-- Closing Note -->
+  <div class="closing">
+    “No matter what, tu hamesha meri <b>best friend</b> rahegi…  
+    <br> Stranger se best friend tak ki journey meri zindagi ka <span>best part</span> hai.  
+    <br> Happy Birthday once again Madam ❤️ <br> I love you Jaanu 🫶💖💞😚💕🤞”
+  </div>
+
+  <!-- Buttons -->
+  <div class="buttons">
+    <button class="surprise-btn" onclick="openSurprise()">🎁 Surprise</button>
+    <button class="next-btn" onclick="location.href='nextpage.html'">➡ Next Page</button>
+  </div>
+
+  <!-- Surprise Slideshow Popup -->
+  <div id="surpriseBox" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closeSurprise()">&times;</span>
+      <img id="slideshow" src="" alt="Slideshow">
+      <div class="caption" id="caption"></div>
+      <div class="dots" id="dots"></div>
+      <!-- Navigation buttons -->
+      <div class="nav-controls">
+        <button class="nav-btn" onclick="changeSlide(-1)">⬅ Prev</button>
+        <button class="nav-btn" onclick="changeSlide(1)">Next ➡</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Floating Balloons & Hearts
+    function createFloating() {
+      const el = document.createElement("div");
+      el.className = Math.random() > 0.5 ? "balloon" : "heart";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    }
+    setInterval(createFloating, 500);
+
+    // Slideshow
+    const images = [
+      {src: "img7.jpg", caption: "Meri pyari Madam jii🤌💕"},
+      {src: "img3.jpg", caption: "Meri hamesha hassi ki wajah ✨"},
+      {src: "img1.jpg", caption: "Baccha & Madam = Forever Dost ❤️"},
+      {src: "img8.jpg", caption: "Birthday girl looking like a Queen 👑"},
+      {src: "img10.jpg", caption: "😊💖🫶💞"}
+    ];
+    let slideIndex = 0, slideInterval;
+
+    function createDots() {
+      const dotContainer = document.getElementById("dots");
+      dotContainer.innerHTML = "";
+      for (let j = 0; j < images.length; j++) {
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.onclick = () => { slideIndex = j; showSlide(); resetInterval(); };
+        dotContainer.appendChild(dot);
+      }
+    }
+
+    function showSlide() {
+      const slideshow = document.getElementById("slideshow");
+      slideshow.src = images[slideIndex].src;
+      document.getElementById("caption").textContent = images[slideIndex].caption;
+
+      const allDots = document.querySelectorAll(".dot");
+      allDots.forEach((d, idx) => d.classList.toggle("active", idx === slideIndex));
+
+      // Restart zoom animation on each slide change
+      slideshow.style.animation = "none";
+      slideshow.offsetHeight; // force reflow
+      slideshow.style.animation = "zoomEffect 8s infinite alternate ease-in-out";
+    }
+
+    function openSurprise() {
+      document.getElementById("surpriseBox").style.display = "flex";
+      slideIndex = 0;
+      createDots();
+      showSlide();
+      slideInterval = setInterval(() => { 
+        slideIndex = (slideIndex + 1) % images.length; 
+        showSlide(); 
+      }, 2000);
+    }
+    function closeSurprise() {
+      document.getElementById("surpriseBox").style.display = "none";
+      clearInterval(slideInterval);
+    }
+    function resetInterval() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(() => { 
+        slideIndex = (slideIndex + 1) % images.length; 
+        showSlide(); 
+      }, 2000);
+    }
+    function changeSlide(n) {
+      slideIndex = (slideIndex + n + images.length) % images.length;
+      showSlide();
+      resetInterval();
+    }
+
+    // Countdown
+    const birthday = new Date(new Date().getFullYear(), 9, 18);
+    function updateCountdown() {
+      const now = new Date();
+      const diff = birthday - now;
+      if (diff <= 0) {
+        document.getElementById("countdown").textContent = "🎂 It's Your Birthday Today!";
+        return;
+      }
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff/(1000*60*60)) % 24);
+      const mins = Math.floor((diff/60000) % 60);
+      const secs = Math.floor((diff/1000) % 60);
+      document.getElementById("countdown").textContent = `${days}d ${hours}h ${mins}m ${secs}s left for your Birthday 🎉`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Typewriter Note
+    const noteText = "Dear Madam ❤️,\n\nWishing you a happiest birthday ever 🎂❤💖 and i hope agli bar jb wish karu to tumse milke tumhara hath pakar kar🫴 wish kru😚💗\nTum mujhe Baccha bulati ho aur mujhe ye nickname duniya ki sabse sweet cheez lagta hai 💕\nTum meri hamesha wali bestfriend ho aur rahogi❤️\nMai tumhe bestfriend se bhi kahi jada manta hu or mere dil🫀 mai tumhare liye special jagah hai🫶💖 jo ki mai kisi or ko shayad hi de pau \nBahut bar humlog k bich bahut se an-ban hue but hum fir bhi sath hai or bhagwan ji se yhi pray karunga ki hum hamesha aise hi sath rahai\nMujhe bs us din ka intezar hai jis din hum hug kare🫂 tumhare hug ki bahut need lagti hai.\nBhagwan ji kirpa tumpr hamesha bni rahai🙌😊 or tumhe hamesha khush rakhe kabhi koi problem na aane de tumhari life mai🤞💖";
+    let i = 0;
+    function typeWriter() {
+      if (i < noteText.length) {
+        document.getElementById("note").textContent += noteText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+    typeWriter();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
